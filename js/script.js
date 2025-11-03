@@ -1,4 +1,4 @@
-
+console.log("script.js loaded");
 const API_KEY = "eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv";
 const endpoint = "https://api.giphy.com/v1/gifs/search?api_key=eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv&q=dogs&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips";
 
@@ -37,4 +37,5 @@ fetchBtn.addEventListener("click", async () => {
     const images = await fetchGifs(searchTerm);
     displayGifs(images);
 });
+
 
