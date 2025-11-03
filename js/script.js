@@ -1,28 +1,40 @@
-console.log("script.js loaded");
+
 const API_KEY = "eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv";
 const endpoint = "https://api.giphy.com/v1/gifs/search?api_key=eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv&q=dogs&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips";
 
-async function fetchGifs() {
+
+//fetch GIFs
+async function fetchGifs(query = "dogs") {
     try {
-        const response = await fetch(endpoint);      // Use your endpoint constant
-        const data = await response.json();          // Parse JSON
-        const images = data.data.map(gif => gif.images.original.url); // Extract URLs
-        console.log(images);                          // Preview in console
-        return images;                                // Return array
+        const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Extract original GIF URLs
+        const images = data.data.map(gif => gif.images.original.url);
+        console.log(images); // Preview array in console
+        return images;
     } catch (error) {
         console.error("Error fetching GIFs:", error);
         return [];
     }
 }
 
-const gifContainer = document.querySelector("#gif-container");
-const fetchBtn = document.querySelector("#fetch-gif-btn");
-
-fetchBtn.addEventListener("click", async () => {
-    const images = await fetchGifs();             // Step 7 function
-    gifContainer.innerHTML = "";                  // Clear previous GIFs
+// display GIFs
+function displayGifs(images) {
+    gifContainer.innerHTML = ""; // Clear previous GIFs
     for (let url of images) {
         gifContainer.innerHTML += `<img src="${url}" class="col-3 mb-3">`;
     }
+}
+
+// Event listener for button click
+fetchBtn.addEventListener("click", async () => {
+    // Get search term from input, default to "dogs"
+    const searchTerm = searchInput.value.trim() || "dogs";
+
+    // Fetch GIFs and display them
+    const images = await fetchGifs(searchTerm);
+    displayGifs(images);
 });
 
