@@ -1,9 +1,15 @@
 console.log("script.js loaded");
+
+// Constants
 const API_KEY = "eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv";
 const endpoint = "https://api.giphy.com/v1/gifs/search?api_key=eSBJhhlpzWuZ3HVAC1LdWh1ggbSlPTHv&q=dogs&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips";
 
+// HTML elements
+const gifContainer = document.querySelector("#gif-container");
+const fetchBtn = document.querySelector("#fetch-gif-btn");
+const searchInput = document.querySelector("#search-input");
 
-//fetch GIFs
+// fetch GIFs
 async function fetchGifs(query = "dogs") {
     try {
         const url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
@@ -12,7 +18,7 @@ async function fetchGifs(query = "dogs") {
 
         // Extract original GIF URLs
         const images = data.data.map(gif => gif.images.original.url);
-        console.log(images); // Preview array in console
+        console.log("Fetched images:", images); // Preview array in console
         return images;
     } catch (error) {
         console.error("Error fetching GIFs:", error);
@@ -28,14 +34,12 @@ function displayGifs(images) {
     }
 }
 
-// Event listener for button click
+// Button click event
 fetchBtn.addEventListener("click", async () => {
-    // Get search term from input, default to "dogs"
-    const searchTerm = searchInput.value.trim() || "dogs";
+    const searchTerm = searchInput.value.trim() || "dogs"; // Use input or default
+    console.log("Search term:", searchTerm);
 
-    // Fetch GIFs and display them
     const images = await fetchGifs(searchTerm);
     displayGifs(images);
 });
-
 
