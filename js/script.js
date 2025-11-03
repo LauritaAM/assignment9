@@ -15,4 +15,14 @@ async function fetchGifs() {
     }
 }
 
+const gifContainer = document.querySelector("#gif-container");
+const fetchBtn = document.querySelector("#fetch-gif-btn");
+
+fetchBtn.addEventListener("click", async () => {
+    const images = await fetchGifs();             // Step 7 function
+    gifContainer.innerHTML = "";                  // Clear previous GIFs
+    for (let url of images) {
+        gifContainer.innerHTML += `<img src="${url}" class="col-3 mb-3">`;
+    }
+});
 
